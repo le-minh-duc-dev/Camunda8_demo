@@ -39,20 +39,9 @@ public class ChargePaymentWorker : BackgroundService
 
         if (variables.TryGetValue("orderId", out var obj) && obj is JsonElement je && je.ValueKind == JsonValueKind.String)
         {
-            var amount = 120;
+            var amount = 50;
 
             bool paid = _paymentService.Charge(je.GetString()!, amount);
-
-            if (!paid)
-            {
-                _ = jobClient.NewFailCommand(job.Key)
-                              .Retries(job.Retries - 1)
-                              .ErrorMessage("Payment failed")
-                              .Send()
-                              .GetAwaiter()
-                              .GetResult();
-                return;
-            }
 
             _ = jobClient.NewCompleteJobCommand(job.Key)
                           .Variables(JsonSerializer.Serialize(new

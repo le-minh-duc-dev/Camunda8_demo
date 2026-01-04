@@ -20,9 +20,13 @@ builder.Services.AddSingleton(sp => ZeebeClient.Builder()
 builder.Services.AddSingleton<IInventoryService, InventoryService>();
 builder.Services.AddSingleton<IPaymentService, PaymentService>();
 builder.Services.AddSingleton<IShippingService, ShippingService>();
+builder.Services.AddSingleton<IReservationService, ReservationService>();
+builder.Services.AddSingleton<IReleaseService, ReleaseService>();
 
 // Hosted workers
 builder.Services.AddHostedService<CheckInventoryWorker>();
+builder.Services.AddHostedService<ReserveInventoryWorker>();
+builder.Services.AddHostedService<ReleaseInventoryWorker>();
 builder.Services.AddHostedService<ChargePaymentWorker>();
 builder.Services.AddHostedService<ShipItemsWorker>();
 

@@ -6,23 +6,23 @@ using Zeebe.Client.Api.Worker;
 
 namespace WebApplication4.Workers;
 
-public class CheckInventoryWorker : BackgroundService
+public class ReleaseInventoryWorker : BackgroundService
 {
     private readonly IZeebeClient _client;
-    private readonly IInventoryService _inventoryService;
+    private readonly IReleaseService _releaseInventoryService;
 
-    public CheckInventoryWorker(IZeebeClient client, IInventoryService inventoryService)
+    public ReleaseInventoryWorker(IZeebeClient client, IReleaseService releaseInventoryService)
     {
         _client = client;
-        _inventoryService = inventoryService;
+        _releaseInventoryService = releaseInventoryService;
     }
 
     protected override Task ExecuteAsync(CancellationToken stoppingToken)
     {
         _client.NewWorker()
-            .JobType("check-inventory")
+            .JobType("release-inventory")
             .Handler(HandleJob)
-            .Name("CheckInventoryWorker")
+            .Name("ReleaseInventory")
             .MaxJobsActive(5)
             .Timeout(TimeSpan.FromSeconds(30))
             .PollInterval(TimeSpan.FromSeconds(1))
@@ -38,20 +38,18 @@ public class CheckInventoryWorker : BackgroundService
         if (variables.TryGetValue("orderId", out var obj) && obj is JsonElement je && je.ValueKind == JsonValueKind.String)
         {
 
-            bool available = _inventoryService.CheckStock(je.GetString()!);
+            bool isReleased = _releaseInventoryService.Release(je.GetString()!);
 
             _ = jobClient.NewCompleteJobCommand(job.Key)
                           .Variables(JsonSerializer.Serialize(new
                           {
-                              available
+                              isReleased
                           }))
                           .Send()
                           .GetAwaiter()
                           .GetResult();
             return;
         }
-
-
         _ = jobClient.NewFailCommand(job.Key)
                           .Retries(job.Retries - 1)
                           .ErrorMessage("orderId missing")
