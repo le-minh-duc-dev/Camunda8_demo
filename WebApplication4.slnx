@@ -1,6 +1,11 @@
 <Solution>
   <Folder Name="/Solution Items/">
+    <File Path="../../../../Downloads/diagram_1.bpmn" />
+    <File Path="../../../../Downloads/docker-compose-8.8.zip" />
     <File Path="README.MD" />
+  </Folder>
+  <Folder Name="/Solution Items/images/">
+    <File Path="../../../../Pictures/Screenshots/deploy.png" />
   </Folder>
   <Project Path="WebApplication4/WebApplication4.csproj" />
 </Solution>
