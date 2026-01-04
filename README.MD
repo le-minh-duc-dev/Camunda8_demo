@@ -42,7 +42,11 @@ This document provides instructions on how to install and use Camunda 8
 	![deploy](images/deploy.png)
 
 6. **Trigger Process Instances**
-   - Using Camunda Modeler, you can trigger process instances of your deployed BPMN diagrams.
+   - Use Swagger UI to trigger process instances of your deployed BPMN diagrams.
+
+   ![start instance by Swagger](images/start_instance_swagger_response.png)
+   
+   - Or using Camunda Modeler, you can trigger process instances of your deployed BPMN diagrams.
    - Click on the "Open start instance" button in the Camunda Modeler and provide the necessary details (e.g., process definition key, variables).
 	
    ![start instance](images/start_instance.png)
