@@ -52,5 +52,7 @@ This document provides instructions on how to install and use Camunda 8
    ![start instance](images/start_instance.png)
 5. **Access Web Interfaces**
   - **Operate:** [http://localhost:8088/operate](http://localhost:8088/operate)
+  - **Tasklist:** [http://localhost:8088/tasklist](http://localhost:8088/tasklist)
+  - **Identity:** [http://localhost:8088/identity](http://localhost:8088/identity)
   - **Username:** `demo`
   - **Password:** `demo` 
